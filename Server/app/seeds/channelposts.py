@@ -4,17 +4,23 @@ from sqlalchemy.sql import text
 
 # Adds a demo user, you can add other users here if you want
 def seed_channelposts():
-    # server 1 channels
-    channelpost1=ChannelPost(
+    channel1post1=ChannelPost(
         user_id=1,channel_id=1 ,content="Channel 1 content")
-    channelpost2=ChannelPost(
-        user_id=1,channel_id=2 ,content="More Channel content")    
-    channelpost3=ChannelPost(
+    channel1post2=ChannelPost(
+        user_id=1,channel_id=1 ,content="More Content for Channel 1")
+    
+    channel2post1=ChannelPost(
+        user_id=1,channel_id=2 ,content="More Channel content")   
+     
+    channel3post1=ChannelPost(
         user_id=2,channel_id=3, content="Funny channel content")
     
-    db.session.add(channelpost1)
-    db.session.add(channelpost2)
-    db.session.add(channelpost3)
+    db.session.add(channel1post1)
+    db.session.add(channel1post2)
+
+    db.session.add(channel2post1)
+    
+    db.session.add(channel3post1)
     db.session.commit()
 
 
