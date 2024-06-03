@@ -7,7 +7,7 @@ server_routes = Blueprint('servers', __name__)
 
 
 @server_routes.route('/')
-@login_required
+# @login_required
 def get_servers():
     # user=current_user
     server_member_list = Member.query.filter(Member.user_id == current_user.id).all()
@@ -24,7 +24,7 @@ def get_servers():
 
 
 @server_routes.route('/<int:id>/channels')
-@login_required
+# @login_required
 def get_server(id):
     channels = Channel.query.filter(Channel.server_id == id).all()
     return {'channels':[channel.to_dict() for channel in channels]}

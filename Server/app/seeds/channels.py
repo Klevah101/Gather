@@ -12,9 +12,13 @@ def seed_channels():
     channel3=Channel(
         server_id=1, label="Demo Channel 3")
     
+    channel4=Channel(
+        server_id=2, label="server 2 Demo Channel 1")
+    
     db.session.add(channel1)
     db.session.add(channel2)
     db.session.add(channel3)
+    db.session.add(channel4)
     db.session.commit()
 
 
