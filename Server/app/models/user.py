@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     avatar =db.Column(db.String(255))#should be URL
     hashed_password = db.Column(db.String(255), nullable=False)
+    
     members = db.relationship("Member",back_populates="users")
     servers = db.relationship("Server",back_populates="users")
     channelposts = db.relationship("ChannelPost",back_populates="users")

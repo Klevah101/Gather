@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from flask_login import UserMixin
+# from flask_login import UserMixin
 
 
 class Server(db.Model):
@@ -24,5 +24,7 @@ class Server(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'admin': self.admin
+            'admin': self.admin,
+            'description':self.description,
+            'icon':self.icon
         }

@@ -1,5 +1,6 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const SET_CURRENT_CHANNEL = 'session/setCurrentChannel'
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -8,6 +9,11 @@ const setUser = (user) => ({
 
 const removeUser = () => ({
   type: REMOVE_USER
+});
+
+export const setCurrentChannel = (channel) =>({
+type: SET_CURRENT_CHANNEL,
+payload:channel
 });
 
 export const thunkAuthenticate = () => async (dispatch) => {
@@ -70,6 +76,8 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
+    case SET_CURRENT_CHANNEL:
+      return {...state, channel: action.payload}
     default:
       return state;
   }

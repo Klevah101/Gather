@@ -9,16 +9,16 @@ def seed_channelposts():
     channel1post2=ChannelPost(
         user_id=1,channel_id=1 ,content="More Content for Channel 1")
     channel1post3=ChannelPost(
-        user_id=2,channel_id=1 ,content="Content for Channel 1 from a 2nd user")
+        user_id=3,channel_id=1 ,content="Content for Channel 1 from a 2nd user")
     
     channel2post1=ChannelPost(
         user_id=1,channel_id=2 ,content="More Channel content")   
      
     channel3post1=ChannelPost(
-        user_id=2,channel_id=3, content="Funny channel content")
+        user_id=3,channel_id=3, content="Funny channel content")
     
     channel4post1=ChannelPost(
-        user_id=2,channel_id=4, content="Funner channel content")
+        user_id=3,channel_id=4, content="Funner channel content")
     
     db.session.add(channel1post1)
     db.session.add(channel1post2)

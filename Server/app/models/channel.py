@@ -11,7 +11,7 @@ class Channel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     server_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod('servers.id'))) # foreign key
-    label = db.Column(db.String(40), nullable=False)
+    label = db.Column(db.String(100), nullable=False)
     # admin = db.Column(db.String(40), nullable=False, unique=True)
     # description = db.Column(db.String(255), nullable=False)
 
