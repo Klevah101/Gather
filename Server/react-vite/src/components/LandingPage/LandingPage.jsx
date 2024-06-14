@@ -3,8 +3,8 @@ import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
-// import { thunkGetServers } from "../../redux/server";
 import { thunkSignup } from "../../redux/session";
+
 
 
 
@@ -20,7 +20,7 @@ const LandingPage = () => {
     const [username, setUsername] = useState("");
 
 
-    if (sessionUser) return <Navigate to="/" replace={true} />;
+    if (sessionUser) return <Navigate to="/main" replace={true} />;
 
     const handleSubmit = async (e) => {
         e.preventDefault();

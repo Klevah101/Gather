@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify ,request
 from flask_login import current_user,login_required
 from app.models import Server, Member, User, Channel,db
 from app.forms import CreateServerForm
+from app.forms import CreateChannelForm
+from app.forms import UpdateServerForm
 # from flask_login import  login_user, logout_user, login_required
 
 server_routes = Blueprint('servers', __name__)
@@ -16,16 +18,29 @@ def get_servers():
         server_member_list = Member.query.filter(Member.user_id == current_user.id).all()
         # print(server_member_list)
         server_list = []
-        for server in server_member_list:
-            server_list.append(server.id)
+        for member in server_member_list:
+            server_list.append(member.server_id)
 
-    # print(server_list)
+        print(server_list)
         servers = Server.query.filter(Server.id.in_( server_list)).all()
     # servers = Server.query.filter(server_list in Server.id).all()
 
         return {'servers': [server.to_dict() for server in servers]}
     else:      
         return {'message': "no current user"}
+
+@server_routes.route('/<int:id>',methods=["PUT"])
+def update_server(id):
+    form = UpdateServerForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        server = Server.query.get(id)
+        server.description = form.data['description']
+        server.name = form.data['name']
+        db.session.commit()
+        return server.to_dict()
+    else:
+        return 401
 
 
 @server_routes.route('/<int:id>/channels')
@@ -46,8 +61,8 @@ def get_server(id):
 def get_server_members(id):
     members = Member.query.filter(Member.server_id == id).all()
     member_id_list = []
-    for member_id in members:
-        member_id_list.append(member_id.user_id)
+    for member in members:
+        member_id_list.append(member.user_id)
     server_members = User.query.filter(User.id.in_(member_id_list)).all()
     return {'members':[user.to_dict() for user in server_members]}
     
@@ -62,6 +77,14 @@ def get_all_servers():
     servers = Server.query.all()
     return {'servers':[server.to_dict() for server in servers]}
 
+@server_routes.route('/<int:id>/members',methods=['POST'])
+def add_member_to_server(id):
+    member = Member(
+        user_id = current_user.id,
+        server_id=id)
+    db.session.add(member)
+    db.session.commit()
+    return member.to_dict()
 
 @server_routes.route('/',methods=['POST'])
 def create_server():
@@ -93,3 +116,11 @@ def create_server():
         db.session.commit()
         return new_server.to_dict()
     return form.errors,401
+
+
+@server_routes.route('<int:id>',methods=['DELETE'])
+def delete_server(id):
+    server = Server.query.get(id)
+    db.session.delete(server)
+    db.session.commit()
+    return {"message":"success"}

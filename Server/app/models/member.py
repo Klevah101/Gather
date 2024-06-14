@@ -10,7 +10,7 @@ class Member(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    server_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod('servers.id'))) # foreign key
+    server_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod('servers.id'),ondelete='CASCADE')) # foreign key
     user_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod('users.id'))) # foreign key
     # admin = db.Column(db.String(40), nullable=False, unique=True)
     # description = db.Column(db.String(255), nullable=False)

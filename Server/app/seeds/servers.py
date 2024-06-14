@@ -7,9 +7,9 @@ def seed_servers():
     server1 = Server(
         name='Demo Server 1', admin=1, description='description',icon='placeholder icon')
     server2 = Server(
-        name='Demo Sever 2', admin="2",description='description',icon='placeholder icon')
+        name='Demo Sever 2', admin=2,description='description',icon='placeholder icon')
     server3 = Server(
-        name='Demo Server 3',admin="3", description='description',icon='placeholder icon')
+        name='Demo Server 3', admin=3, description='description',icon='placeholder icon')
 
     db.session.add(server1)
     db.session.add(server2)

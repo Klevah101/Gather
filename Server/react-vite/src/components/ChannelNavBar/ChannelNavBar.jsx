@@ -1,25 +1,103 @@
+import { useEffect, useState } from "react";
 import ChannelLabelItem from "../ChannelLabel/ChannelLabelItem";
 import { useDispatch, useSelector } from "react-redux";
+import { clearChannels, thunkCreateChannel, thunkGetChannels } from "../../redux/channel";
+import UpdateServerButton from "../UpdateServerButton/UpdateServerButton";
 // import ChannelPostBar from "../ChannelPostBar/ChannelPostBar";
 // import { thunkGetChannels } from "../../redux/channel";
+// import { clearChannels, thunkGetChannels } from "../../redux/channel";
+import { clearMembers, thunkGetMembers } from "../../redux/member";
+import { clearContents, thunkGetChannelContents } from "../../redux/channelcontent";
+import { setCurrentChannel, setCurrentServer } from "../../redux/session";
+import CurrentUserSection from "../CurrentUserSection/CurrentUserSection";
+import { useNavigate } from "react-router-dom";
+import { thunkDeleteServer } from "../../redux/server";
 
 const ChannelNavBar = () => {
-    // const dispatch = useDispatch()
-    const channelSlice = useSelector(state => state.channels)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    return (
+    const serverSlice = useSelector(state => state.servers)
+    const channelSlice = useSelector(state => state.channels)
+    const currentServer = useSelector(state => state.session.server)
+    const [hide, setHide] = useState("hide")
+    const [newChannelText, setNewChannelText] = useState("")
+    const handleNewChannelSubmit = async (e) => {
+        if (e.key == 'Enter') {
+            const payload = {
+                label: e.target.value,
+                server_id: currentServer
+            }
+            await dispatch(thunkCreateChannel(payload))
+            dispatch(thunkGetChannels(currentServer))
+            setHide("hide")
+            setNewChannelText("")
+        }
+    }
+
+
+
+    const handleClick = async () => {
+        if (Object.keys(serverSlice).length <= 1) {
+            dispatch(clearContents())
+            dispatch(clearMembers())
+            dispatch(clearChannels())
+            await dispatch(thunkDeleteServer(currentServer))
+            navigate('/discover')
+        }
+        await dispatch(thunkDeleteServer(currentServer))
+        dispatch(thunkGetServers())
+            .then(data => {
+                let id
+                if (Object.keys(data).length != 0) {
+                    console.log(data)
+                    id = data[Object.keys(data)[0]].id
+                }
+
+
+                dispatch(setCurrentServer(id))
+                dispatch(thunkGetMembers(id))
+                dispatch(thunkGetChannels(id))
+                    .then(data => {
+                        let id
+                        if (Object.keys(data).length != 0) {
+                            id = data[Object.keys(data)[0]].id
+                        }
+                        dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
+                        dispatch(thunkGetChannelContents(id))
+                        return id
+                    })
+
+
+            })
+    }
+
+
+    return (<div className="channel-col">
+
         <div className="channel-nav-container">
-            <h2>Channel Nav Bar</h2>
+            {/* <h2>Channel Nav Bar</h2> */}
+            {serverSlice[currentServer] && <>
+                <h2> {serverSlice[currentServer].name}</h2>
+                {/* <button onClick={handleClick}>test delete</button> */}
+            </>
+            }
+            <UpdateServerButton />
+            <button onClick={() => { setHide("") }}>New Channel</button>
             <div className="nav-bar channel-bar">
                 <div className="item-list">
                     {channelSlice && Object.keys(channelSlice).map(element => {
-                        return <div key={element.id}><ChannelLabelItem label={channelSlice[element].label} channel={channelSlice[element]}/></div>
+                        return <div className="channel-list" key={element.id}><ChannelLabelItem label={channelSlice[element].label} channel={channelSlice[element]} /></div>
                     })
                     }
                 </div>
             </div>
-            
+            <input className={`{channel-input ${hide}`} value={newChannelText} type="text" placeholder="Enter Channel Name..." onKeyUp={(e) => handleNewChannelSubmit(e)} onChange={(e) => setNewChannelText(e.target.value)}></input>
         </div>
+        <div className="user-section">
+            <CurrentUserSection />
+        </div>
+    </div>
     )
 }
 

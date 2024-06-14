@@ -1,8 +1,20 @@
-const SET_SERVERS = 'session/setServers';
+const SET_USER_SERVERS = 'session/getUserServers';
 const CREATE_SERVER = 'session/createServer';
+const GET_ALL_SERVERS = 'session/getAllServers';
+const UPDATE_SERVER = 'session/updateServer';
+const DELETE_SERVER = 'session/deleteServer';
+const CLEAR_SERVERS = 'session/clearServers'
 
-const setServers = (servers) => ({
-  type: SET_SERVERS,
+export const clearServers = () => ({
+  type: CLEAR_SERVERS
+})
+const deleteServer = (server) => ({
+  type: DELETE_SERVER,
+  payload: server
+})
+
+const getUserServers = (servers) => ({
+  type: SET_USER_SERVERS,
   payload: servers
 });
 
@@ -10,6 +22,61 @@ const createServer = (server) => ({
   type: CREATE_SERVER,
   payload: server
 });
+
+const getAllServers = (servers) => ({
+  type: GET_ALL_SERVERS,
+  payload: servers
+})
+
+const updateServer = (server) => ({
+  type: UPDATE_SERVER,
+  payload: server
+})
+
+export const thunkDeleteServer = (id) => async (dispatch) => {
+  const response = await fetch(`/api/servers/${id}`, {
+    method: "DELETE"
+  })
+
+  if (response.ok) {
+    // const data=await response.json()// only need this if I return the id from the server
+    dispatch(deleteServer(id))
+  }
+}
+
+export const thunkUpdateServer = (id, payload) => async (dispatch) => {
+  const response = await fetch(`/api/servers/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  if (response.ok) {
+    const data = await response.json()
+    if (data.errors) {
+      return
+    }
+    dispatch(updateServer(data))
+  }
+}
+
+export const thunkGetAllServers = () => async (dispatch) => {
+  const response = await fetch("/api/servers/all")
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return
+    }
+    const obj = {}
+    const keys = Object.keys(data.servers)
+    keys.forEach(element => {
+      obj[data.servers[element].id] = data.servers[element]
+    })
+    dispatch(getAllServers(obj))
+    return obj
+  }
+}
 
 export const thunkGetServers = () => async (dispatch) => {
   const response = await fetch("/api/servers");
@@ -23,7 +90,7 @@ export const thunkGetServers = () => async (dispatch) => {
     keys.forEach(element => {
       obj[data.servers[element].id] = data.servers[element]
     });
-    dispatch(setServers(obj));
+    dispatch(getUserServers(obj));
     return obj
   }
 };
@@ -43,55 +110,25 @@ export const thunkCreateServer = (payload) => async (dispatch) => {
   }
 }
 
-// export const thunkLogin = (credentials) => async dispatch => {
-//   const response = await fetch("/api/auth/login", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(credentials)
-//   });
-
-//   if(response.ok) {
-//     const data = await response.json();
-//     dispatch(setUser(data));
-//   } else if (response.status < 500) {
-//     const errorMessages = await response.json();
-//     return errorMessages
-//   } else {
-//     return { server: "Something went wrong. Please try again" }
-//   }
-// };
-
-// export const thunkSignup = (user) => async (dispatch) => {
-//   const response = await fetch("/api/auth/signup", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(user)
-//   });
-
-//   if(response.ok) {
-//     const data = await response.json();
-//     dispatch(setUser(data));
-//   } else if (response.status < 500) {
-//     const errorMessages = await response.json();
-//     return errorMessages
-//   } else {
-//     return { server: "Something went wrong. Please try again" }
-//   }
-// };
-
-// export const thunkLogout = () => async (dispatch) => {
-//   await fetch("/api/auth/logout");
-//   dispatch(removeUser());
-// };
 
 const initialState = {};
-
+let obj = {}
 function serverReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_SERVERS:
+    case SET_USER_SERVERS:
       return { ...action.payload };
     case CREATE_SERVER:
       return { ...state, [action.payload.id]: action.payload }
+    case GET_ALL_SERVERS:
+      return { ...action.payload }
+    case UPDATE_SERVER:
+      return { ...state, [action.payload.id]: action.payload }
+    case DELETE_SERVER:
+      obj = { ...state }
+      delete obj[action.payload]
+      return obj
+    case CLEAR_SERVERS:
+      return null
     default:
       return state;
   }

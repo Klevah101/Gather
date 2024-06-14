@@ -1,7 +1,13 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 const SET_CURRENT_CHANNEL = 'session/setCurrentChannel'
+const SET_CURRENT_SERVER = 'session/setCurrentServer'
+const CLEAR_CURRENT_SERVER = 'session/clearCurrentServer'
 
+export const clearCurrentServer = () => ({
+  type: CLEAR_CURRENT_SERVER,
+  payload: null
+})
 const setUser = (user) => ({
   type: SET_USER,
   payload: user
@@ -11,10 +17,17 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
-export const setCurrentChannel = (channel) =>({
-type: SET_CURRENT_CHANNEL,
-payload:channel
+export const setCurrentChannel = (channel) => ({
+  type: SET_CURRENT_CHANNEL,
+  payload: channel
 });
+
+export const setCurrentServer = (server) => ({
+  type: SET_CURRENT_SERVER,
+  payload: server
+})
+
+
 
 export const thunkAuthenticate = () => async (dispatch) => {
   const response = await fetch("/api/auth/");
@@ -77,7 +90,11 @@ function sessionReducer(state = initialState, action) {
     case REMOVE_USER:
       return { ...state, user: null };
     case SET_CURRENT_CHANNEL:
-      return {...state, channel: action.payload}
+      return { ...state, channel: action.payload }
+    case SET_CURRENT_SERVER:
+      return { ...state, server: action.payload }
+    case CLEAR_CURRENT_SERVER:
+      return action.payload
     default:
       return state;
   }

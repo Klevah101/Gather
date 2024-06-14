@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+
 import MemberItem from "../MemberItem/MemberItem";
-import { useDispatch, useSelector } from "react-redux"
+import {  useSelector } from "react-redux"
 
 const MemberSection = () => {
-    const dispatch = useDispatch();
+
     const memberSlice = useSelector(state => state.members)
     return (
         <div className="member-container">

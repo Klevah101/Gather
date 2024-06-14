@@ -14,6 +14,7 @@ function Navigation() {
       <li>
         <NavLink to="/serverbar">serverbar</NavLink>
       </li>
+      <li>😀</li>
 
       <li>
         <ProfileButton />

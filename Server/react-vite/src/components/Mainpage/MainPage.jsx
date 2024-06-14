@@ -8,7 +8,9 @@ import { thunkGetServers } from "../../redux/server";
 import { thunkGetChannels } from "../../redux/channel";
 import { thunkGetMembers } from "../../redux/member";
 import { thunkGetChannelContents } from "../../redux/channelcontent";
-import { setCurrentChannel } from "../../redux/session";
+import { setCurrentChannel, setCurrentServer } from "../../redux/session";
+
+
 
 const MainPage = () => {
     const dispatch = useDispatch();
@@ -17,22 +19,31 @@ const MainPage = () => {
     const channelSlice = useSelector(state => state.channels)
     const memberSlice = useSelector(state => state.members)
     const postSlice = useSelector(state => state.contents)
-
     useEffect(() => {
         dispatch(thunkGetServers())
             .then(data => {
-                const id = data[Object.keys(data)[0]].id
+                let id
+                if (data) {
+                    id = data[Object.keys(data)[0]].id
+                }
 
+
+                dispatch(setCurrentServer(id))
+                dispatch(thunkGetMembers(id))
                 dispatch(thunkGetChannels(id))
                     .then(data => {
-                        const id = data[Object.keys(data)[0]].id
+                        let id
+                        if (data) {
+                            id = data[Object.keys(data)[0]].id
+                        }
                         dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
                         dispatch(thunkGetChannelContents(id))
                         return id
                     })
-                dispatch(thunkGetMembers(id))
+
             })
-    }, [])
+    }, [dispatch])
+
 
 
     return (

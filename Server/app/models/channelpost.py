@@ -9,12 +9,12 @@ class ChannelPost(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')),nullable=False)
-    channel_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('channels.id')),nullable=False) #user, foreign Key
+    channel_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('channels.id'),ondelete="CASCADE")) #user, foreign Key
     content = db.Column(db.String(255), nullable=False)
 
     #add foreign key stuff
     users = db.relationship("User",back_populates="channelposts")
-    channels = db.relationship("Channel",back_populates="channelposts")
+    channels = db.relationship("Channel",back_populates="channelposts",lazy='joined')
 
     def to_dict(self):
         return {

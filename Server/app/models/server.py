@@ -15,9 +15,9 @@ class Server(db.Model):
     icon = db.Column(db.String(255))
 
     #add key stuff
-    members = db.relationship("Member",back_populates="servers")
+    members = db.relationship("Member",back_populates="servers",cascade="all,delete")
     users = db.relationship("User",back_populates="servers")
-    channels = db.relationship("Channel",back_populates="servers")
+    channels = db.relationship("Channel",back_populates="servers",cascade="all,delete")
 
 
     def to_dict(self):

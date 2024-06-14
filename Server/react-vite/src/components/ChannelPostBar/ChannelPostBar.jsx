@@ -11,19 +11,19 @@ const ChannelPostBar = () => {
 
         if (e.key === 'Enter') {
             const obj = {
-                channel_id:currentChannel.id,
-                content:post
+                channel_id: currentChannel.id,
+                content: post
             }
             dispatch(thunkCreateContent(obj))
-            console.log(`you pressed ${e.key}`)
-            console.log(`the id is ${currentChannel.id}`)
             setPost("")
         }
 
     }
 
     return (
-        <input type="text" value={post} placeholder="Leave a post" onChange={(e) => setPost(e.target.value)} onKeyUp={(e) => sendPost(e)}></input>
+        <>
+            <input type="text" value={post} placeholder="Leave a post" onChange={(e) => setPost(e.target.value)} onKeyUp={(e) => sendPost(e)}></input>
+        </>
     )
 }
 export default ChannelPostBar;
