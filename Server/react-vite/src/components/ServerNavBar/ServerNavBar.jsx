@@ -14,7 +14,7 @@ import CreateServerButton from "../CreateServerButton/CreateServerButton.jsx";
 
 
 const ServerNavBar = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const dispatch = useDispatch()
     const serverSlice = useSelector(state => state.servers)
     const currentServer = useSelector(state => state.session.server)
@@ -25,15 +25,16 @@ const ServerNavBar = () => {
             dispatch(clearMembers())
             dispatch(clearChannels())
             await dispatch(thunkDeleteServer(currentServer))
-            navigate('/discover')
+            // navigate('/')
+            // console.log("navigated")
         }
         await dispatch(thunkDeleteServer(currentServer))
         dispatch(thunkGetServers())
             .then(async data => {
                 let id
                 // if (Object.keys(data).length != 0) {
-                    console.log(data)
-                    id = data[Object.keys(data)[0]].id
+                // console.log(data)
+                id = data[Object.keys(data)[0]].id
                 // }
 
 
@@ -56,14 +57,16 @@ const ServerNavBar = () => {
     return (
         <div className="server-nav-container">
             <div className="nav-bar server-bar">
-                <button onClick={handleClick}>test delete</button>
+                {serverSlice[currentServer] && <button onClick={handleClick}>test delete</button>}
                 {serverSlice &&
                     Object.keys(serverSlice).map(element => {
-                        return <div key={element.id}> <ServerNavItem serverId={element} /></div>
+                        return <div key={element.id}> <ServerNavItem serverId={element} />
+
+                        </div>
                     })
                 }
+                <CreateServerButton />
             </div>
-            <CreateServerButton />
         </div>
     )
 }

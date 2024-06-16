@@ -9,7 +9,7 @@ class Server(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(40), nullable=False, unique=True)
+    name = db.Column(db.String(10), nullable=False, unique=True)
     admin = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')),nullable=False) #user, foreign Key
     description = db.Column(db.String(255), nullable=False)
     icon = db.Column(db.String(255))

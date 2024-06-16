@@ -64,7 +64,7 @@ const LandingPage = () => {
         if (serverResponse) {
             setErrors(serverResponse);
         } else {
-            navigate("/");
+            navigate("/main");
         }
     };
 

@@ -1,4 +1,4 @@
-import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import OpenModalButtonEditPost from "../OpenModalButton/OpenModalButtonEditPost";
 import { useModal } from "../../context/Modal";
 import UpdatePostModal from "../UpdatePostModal/UpdatePostModal";
 
@@ -9,8 +9,8 @@ const UpdatePostButton = ({ contentId }) => {
         closeModal()
     }
     return (
-        <OpenModalButton
-            buttonText="Edit Post"
+        <OpenModalButtonEditPost
+            buttonText="Edit"
             onItemClick={closeMenu}
             modalComponent={<UpdatePostModal id={contentId} />}
         />)

@@ -73,7 +73,7 @@ export const thunkGetAllServers = () => async (dispatch) => {
     keys.forEach(element => {
       obj[data.servers[element].id] = data.servers[element]
     })
-    dispatch(getAllServers(obj))
+    await dispatch(getAllServers(obj))
     return obj
   }
 }

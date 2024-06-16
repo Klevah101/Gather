@@ -81,7 +81,7 @@ function channelReducer(state = initialState, action) {
             // obj[action.payload[action.payload.id]] = action.payload
             return { ...state, [action.payload.id]: action.payload };
         case CLEAR_CHANNELS:
-            return null
+            return {}
         default:
             return state;
     }

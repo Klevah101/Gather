@@ -15,9 +15,10 @@ const ServerNavItem = ({ serverId }) => {
                 dispatch(thunkGetChannels(serverId))
                     .then(data => {
                         const id = data[Object.keys(data)[0]].id
+                        // console.log("this is the id", id)
                         dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
                         dispatch(thunkGetChannelContents(id))
-                    // }
+                        // }
                     })
             }}>
                 <BsQuestionSquare />

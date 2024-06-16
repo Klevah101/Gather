@@ -104,7 +104,7 @@ function channelContentReducer(state = initialState, action) {
         case CREATE_CONTENT:
             return { ...state, [action.payload.id]: action.payload }
         case CLEAR_CONTENTS:
-            return null
+            return {}
         case UPDATE_CONTENT:
             return { ...state, [action.payload.id]: action.payload }
         case DELETE_CONTENT:

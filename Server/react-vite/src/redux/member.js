@@ -72,7 +72,7 @@ function memberReducer(state = initialState, action) {
         case ADD_MEMBER:
             return { ...state, [action.payload.id]: action.payload }
         case CLEAR_MEMBERS:
-            return null
+            return {}
         default:
             return state;
     }

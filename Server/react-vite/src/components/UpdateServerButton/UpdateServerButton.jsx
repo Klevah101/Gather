@@ -10,6 +10,7 @@ const UpdateServerButton = ()=>{
     }
     return (  
         <OpenModalButton
+        buttonStyle="update-server-btn"
         buttonText="Update Server"
         onItemClick={closeMenu}
         modalComponent={  <UpdateServerModal />}

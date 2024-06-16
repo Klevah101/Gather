@@ -1,11 +1,13 @@
 import { useDispatch } from "react-redux"
 import { thunkAddMember } from "../../redux/member"
 import { useNavigate } from "react-router-dom";
+import { thunkGetServers } from "../../redux/server";
 const DiscoveryServer = ({ server }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const handleJoin = (serverId) => {
-        dispatch(thunkAddMember(serverId))
+    const handleJoin = async (serverId) => {
+        await dispatch(thunkGetServers())
+        await dispatch(thunkAddMember(serverId))
         navigate('/main')
     }
     return (

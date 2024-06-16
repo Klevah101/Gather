@@ -11,14 +11,14 @@ const CreateServerPage = () => {
     const [description, setDescription] = useState("")
     const [icon, setIcon] = useState("")
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const obj = {
             name, description, icon
         }
-        dispatch(thunkCreateServer(obj))
+        await dispatch(thunkCreateServer(obj))
         // should navigate you to the newly created server
-        // navigate('/main');
+        navigate('/');
     }
     return (
         <div>
