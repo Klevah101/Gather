@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import User, db
+from app.models import User,Server,Member,Channel, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -13,6 +13,7 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
+        # member = Member.query.filter(Member.user_id == current_user.id).first()
         return current_user.to_dict()
     return {'errors': {'message': 'Unauthorized'}}, 401
 
@@ -29,8 +30,10 @@ def login():
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
+        
         login_user(user)
         return user.to_dict()
+    #get first server and channel and return that also for the session slice
     return form.errors, 401
 
 

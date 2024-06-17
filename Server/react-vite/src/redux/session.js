@@ -1,6 +1,13 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const SET_CURRENT_CHANNEL = 'session/setCurrentChannel'
+const SET_CURRENT_SERVER = 'session/setCurrentServer'
+const CLEAR_CURRENT_SERVER = 'session/clearCurrentServer'
 
+export const clearCurrentServer = () => ({
+  type: CLEAR_CURRENT_SERVER,
+  payload: null
+})
 const setUser = (user) => ({
   type: SET_USER,
   payload: user
@@ -10,16 +17,27 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
-export const thunkAuthenticate = () => async (dispatch) => {
-	const response = await fetch("/api/auth/");
-	if (response.ok) {
-		const data = await response.json();
-		if (data.errors) {
-			return;
-		}
+export const setCurrentChannel = (channel) => ({
+  type: SET_CURRENT_CHANNEL,
+  payload: channel
+});
 
-		dispatch(setUser(data));
-	}
+export const setCurrentServer = (server) => ({
+  type: SET_CURRENT_SERVER,
+  payload: server
+})
+
+
+
+export const thunkAuthenticate = () => async (dispatch) => {
+  const response = await fetch("/api/auth/");
+  if (response.ok) {
+    const data = await response.json();
+    if (data.errors) {
+      return;
+    }
+    dispatch(setUser(data));
+  }
 };
 
 export const thunkLogin = (credentials) => async dispatch => {
@@ -29,7 +47,7 @@ export const thunkLogin = (credentials) => async dispatch => {
     body: JSON.stringify(credentials)
   });
 
-  if(response.ok) {
+  if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
   } else if (response.status < 500) {
@@ -47,7 +65,7 @@ export const thunkSignup = (user) => async (dispatch) => {
     body: JSON.stringify(user)
   });
 
-  if(response.ok) {
+  if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
   } else if (response.status < 500) {
@@ -63,7 +81,7 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
-const initialState = { user: null };
+const initialState = { user: null, server: null, channel: null }; // need something in the database for last channel and last server
 
 function sessionReducer(state = initialState, action) {
   switch (action.type) {
@@ -71,6 +89,12 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
+    case SET_CURRENT_CHANNEL:
+      return { ...state, channel: action.payload }
+    case SET_CURRENT_SERVER:
+      return { ...state, server: action.payload }
+    case CLEAR_CURRENT_SERVER:
+      return action.payload
     default:
       return state;
   }

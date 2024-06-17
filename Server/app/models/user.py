@@ -11,8 +11,15 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
+    firstname = db.Column(db.String(40))
+    lastname = db.Column(db.String(40))
     email = db.Column(db.String(255), nullable=False, unique=True)
+    avatar =db.Column(db.String(255))#should be URL
     hashed_password = db.Column(db.String(255), nullable=False)
+    
+    members = db.relationship("Member",back_populates="users")
+    servers = db.relationship("Server",back_populates="users")
+    channelposts = db.relationship("ChannelPost",back_populates="users")
 
     @property
     def password(self):
@@ -29,5 +36,8 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
+            'firstname':self.firstname,
+            'lastname':self.lastname,
+            'avatar':self.avatar,
             'email': self.email
         }
