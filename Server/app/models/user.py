@@ -10,9 +10,9 @@ class User(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), nullable=False, unique=True)
-    firstname = db.Column(db.String(40))
-    lastname = db.Column(db.String(40))
+    username = db.Column(db.String(255), nullable=False, unique=True)
+    firstname = db.Column(db.String(255))
+    lastname = db.Column(db.String(255))
     email = db.Column(db.String(255), nullable=False, unique=True)
     avatar =db.Column(db.String(255))#should be URL
     hashed_password = db.Column(db.String(255), nullable=False)
