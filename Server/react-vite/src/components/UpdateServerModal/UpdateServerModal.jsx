@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetAllServers, thunkUpdateServer } from "../../redux/server";
+import { thunkGetServers, thunkUpdateServer } from "../../redux/server";
 
 function UpdateServerModal() {
 
@@ -17,10 +17,10 @@ function UpdateServerModal() {
     const payload = {
       name: name,
       description: description,
-      url: url
+      icon: url
     }
     await dispatch(thunkUpdateServer(currentServer, payload))
-    dispatch(thunkGetAllServers())
+    dispatch(thunkGetServers())
   };
 
   return (

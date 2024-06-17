@@ -60,7 +60,7 @@ const ServerNavBar = () => {
                 {serverSlice[currentServer] && <button onClick={handleClick}>test delete</button>}
                 {serverSlice &&
                     Object.keys(serverSlice).map(element => {
-                        return <div key={element.id}> <ServerNavItem serverId={element} />
+                        return <div key={element.id}> <ServerNavItem serverId={element} serverUrl={serverSlice[element].icon} />
 
                         </div>
                     })

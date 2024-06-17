@@ -9,4 +9,5 @@ from wtforms.validators import DataRequired, Email, ValidationError
 class UpdateServerForm(FlaskForm):
     description= StringField('description', validators=[DataRequired()])
     name= StringField('name', validators=[DataRequired()])
+    icon= StringField('icon', validators=[])
     

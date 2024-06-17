@@ -79,83 +79,96 @@ const LandingPage = () => {
     }
 
     return (
-        <>
+        <div className="landing-page-container">
             <h1>Welcome to gather</h1>
-            <h2>Log In</h2>
-            {errors.length > 0 &&
-                errors.map((message) => <p key={message}>{message}</p>)}
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Email
-                    <input
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </label>
-                {errors.email && <p>{errors.email}</p>}
-                <label>
-                    Password
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </label>
-                {errors.password && <p>{errors.password}</p>}
-                <button type="submit">Log In</button>
-            </form>
-            <button onClick={loginDemo}>Demo login</button>
-            <h2>or</h2>
-            <h2>Sign Up</h2>
-            {errors.server && <p>{errors.server}</p>}
-            <form onSubmit={handleSignupSubmit}>
-                <label>
-                    Email
-                    <input
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </label>
-                {errors.email && <p>{errors.email}</p>}
-                <label>
-                    Username
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </label>
-                {errors.username && <p>{errors.username}</p>}
-                <label>
-                    Password
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </label>
-                {errors.password && <p>{errors.password}</p>}
-                <label>
-                    Confirm Password
-                    <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
-                </label>
-                {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-                <button type="submit">Sign Up</button>
-            </form>
+            <div className="landing-columns">
 
-        </>
+                <div className="landing-div">
+
+                    <h2>Log In</h2>
+                    {errors.length > 0 &&
+                        errors.map((message) => <p key={message}>{message}</p>)}
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            Email
+                            <input
+                                type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </label>
+                        {errors.email && <p>{errors.email}</p>}
+                        <label>
+                            Password
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </label>
+                        {errors.password && <p>{errors.password}</p>}
+                        <div className="buttons">
+
+                            <button type="submit">Log In</button>
+                            <button onClick={loginDemo}>Demo login</button>
+                        </div>
+                    </form>
+
+                </div>
+                {/* <h2>or</h2> */}
+                < div className="landing-div">
+
+                    <h2>Sign Up</h2>
+                    {errors.server && <p>{errors.server}</p>}
+                    <form onSubmit={handleSignupSubmit}>
+                        <label>
+                            Email
+                            <input
+                                type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </label>
+                        {errors.email && <p>{errors.email}</p>}
+                        <label>
+                            Username
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </label>
+                        {errors.username && <p>{errors.username}</p>}
+                        <label>
+                            Password
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </label>
+                        {errors.password && <p>{errors.password}</p>}
+                        <label>
+                            Confirm Password
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                            />
+                        </label>
+                        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+                        <button type="submit">Sign Up</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
     );
 }
 export default LandingPage;

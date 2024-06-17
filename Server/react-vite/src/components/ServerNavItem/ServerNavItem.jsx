@@ -5,11 +5,20 @@ import { useDispatch } from "react-redux";
 import { thunkGetMembers } from "../../redux/member";
 import { setCurrentChannel, setCurrentServer } from "../../redux/session";
 
-const ServerNavItem = ({ serverId }) => {
+const ServerNavItem = ({ serverId, serverUrl }) => {
     const dispatch = useDispatch()
+    let showImage = false;
+    if (serverUrl.toLowerCase().endsWith('.svg') ||
+        serverUrl.toLowerCase().endsWith('.jpg') ||
+        serverUrl.toLowerCase().endsWith('.jpeg') ||
+        serverUrl.toLowerCase().endsWith('.png')) {
+        showImage = true
+    }
+
     return (
         <div >
             <p className="server-nav-item" onClick={async () => {
+                console.log(serverId)
                 dispatch(setCurrentServer(serverId))
                 dispatch(thunkGetMembers(serverId))
                 dispatch(thunkGetChannels(serverId))
@@ -21,7 +30,7 @@ const ServerNavItem = ({ serverId }) => {
                         // }
                     })
             }}>
-                <BsQuestionSquare />
+                {showImage && <img className="server-image" src={serverUrl}></img> || <BsQuestionSquare />}
             </p>
         </div>
     )

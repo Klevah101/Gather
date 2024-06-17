@@ -37,6 +37,7 @@ def update_server(id):
         server = Server.query.get(id)
         server.description = form.data['description']
         server.name = form.data['name']
+        server.icon = form.data['icon'] if form.data['icon'] is not None else "" 
         db.session.commit()
         return server.to_dict()
     else:

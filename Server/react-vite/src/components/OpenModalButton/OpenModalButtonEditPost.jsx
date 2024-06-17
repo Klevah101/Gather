@@ -15,7 +15,7 @@ function OpenModalButtonEditPost({
     if (typeof onButtonClick === "function") onButtonClick();
   };
 
-  return <button className="button-icon" onClick={onClick}>{<MdEdit />}</button>;
+  return <button className="button-icon2" onClick={onClick}>{<MdEdit />}</button>;
 }
 
 export default OpenModalButtonEditPost;
