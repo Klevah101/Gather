@@ -8,9 +8,9 @@ class Server(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(255), nullable=False, unique=True)
-    admin = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id"))) #user, foreign Key
+    admin = db.Column(db.Integer(), db.ForeignKey(add_prefix_for_prod("users.id"))) #user, foreign Key
     description = db.Column(db.String(255))
     icon = db.Column(db.String(255))
 
