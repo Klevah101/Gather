@@ -10,8 +10,8 @@ class Server(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False, unique=True)
-    admin = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')),nullable=False) #user, foreign Key
-    description = db.Column(db.String(255), nullable=False)
+    admin = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")),nullable=False) #user, foreign Key
+    description = db.Column(db.String(255))
     icon = db.Column(db.String(255))
 
     #add key stuff
