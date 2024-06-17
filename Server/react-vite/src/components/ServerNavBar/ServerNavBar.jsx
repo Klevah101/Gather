@@ -6,7 +6,7 @@ import { clearChannels, thunkGetChannels } from "../../redux/channel";
 import { clearMembers, thunkGetMembers } from "../../redux/member";
 import { clearContents, thunkGetChannelContents } from "../../redux/channelcontent";
 import { setCurrentChannel, setCurrentServer } from "../../redux/session";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import CreateServerButton from "../CreateServerButton/CreateServerButton.jsx";
 // import { clearCurrentServer } from "../../redux/session";
 

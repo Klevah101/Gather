@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import ChannelLabelItem from "../ChannelLabel/ChannelLabelItem";
 import { useDispatch, useSelector } from "react-redux";
-import { clearChannels, thunkCreateChannel, thunkGetChannels } from "../../redux/channel";
+import {thunkCreateChannel, thunkGetChannels } from "../../redux/channel";
 import UpdateServerButton from "../UpdateServerButton/UpdateServerButton";
 // import ChannelPostBar from "../ChannelPostBar/ChannelPostBar";
 // import { thunkGetChannels } from "../../redux/channel";
 // import { clearChannels, thunkGetChannels } from "../../redux/channel";
-import { clearMembers, thunkGetMembers } from "../../redux/member";
-import { clearContents, thunkGetChannelContents } from "../../redux/channelcontent";
-import { setCurrentChannel, setCurrentServer } from "../../redux/session";
+// import { clearMembers, thunkGetMembers } from "../../redux/member";
+// import { clearContents, thunkGetChannelContents } from "../../redux/channelcontent";
+// import { setCurrentChannel, setCurrentServer } from "../../redux/session";
 import CurrentUserSection from "../CurrentUserSection/CurrentUserSection";
-import { useNavigate } from "react-router-dom";
-import { thunkDeleteServer } from "../../redux/server";
+// import { useNavigate } from "react-router-dom";
+// import { thunkDeleteServer } from "../../redux/server";
 import { MdOutlineFiberNew } from "react-icons/md";
 
 const ChannelNavBar = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const serverSlice = useSelector(state => state.servers)
     const channelSlice = useSelector(state => state.channels)
@@ -39,40 +39,40 @@ const ChannelNavBar = () => {
 
 
 
-    const handleClick = async () => {
-        if (Object.keys(serverSlice).length <= 1) {
-            dispatch(clearContents())
-            dispatch(clearMembers())
-            dispatch(clearChannels())
-            await dispatch(thunkDeleteServer(currentServer))
-            navigate('/')
-        }
-        await dispatch(thunkDeleteServer(currentServer))
-        dispatch(thunkGetServers())
-            .then(data => {
-                let id
-                if (Object.keys(data).length != 0) {
-                    console.log(data)
-                    id = data[Object.keys(data)[0]].id
-                }
+    // const handleClick = async () => {
+    //     if (Object.keys(serverSlice).length <= 1) {
+    //         dispatch(clearContents())
+    //         dispatch(clearMembers())
+    //         dispatch(clearChannels())
+    //         await dispatch(thunkDeleteServer(currentServer))
+    //         navigate('/')
+    //     }
+    //     await dispatch(thunkDeleteServer(currentServer))
+    //     dispatch(thunkGetServers())
+    //         .then(data => {
+    //             let id
+    //             if (Object.keys(data).length != 0) {
+    //                 console.log(data)
+    //                 id = data[Object.keys(data)[0]].id
+    //             }
 
 
-                dispatch(setCurrentServer(id))
-                dispatch(thunkGetMembers(id))
-                dispatch(thunkGetChannels(id))
-                    .then(data => {
-                        let id
-                        if (Object.keys(data).length != 0) {
-                            id = data[Object.keys(data)[0]].id
-                        }
-                        dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
-                        dispatch(thunkGetChannelContents(id))
-                        return id
-                    })
+    //             dispatch(setCurrentServer(id))
+    //             dispatch(thunkGetMembers(id))
+    //             dispatch(thunkGetChannels(id))
+    //                 .then(data => {
+    //                     let id
+    //                     if (Object.keys(data).length != 0) {
+    //                         id = data[Object.keys(data)[0]].id
+    //                     }
+    //                     dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
+    //                     dispatch(thunkGetChannelContents(id))
+    //                     return id
+    //                 })
 
 
-            })
-    }
+    //         })
+    // }
 
     // const showButton = (() => {
     //     if (serverSlice[currentServer] && user && currentServer) return user.id == serverSlice[currentServer].admin

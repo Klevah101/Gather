@@ -9,7 +9,7 @@ import { thunkGetChannels } from "../../redux/channel";
 import { thunkGetMembers } from "../../redux/member";
 import { thunkGetChannelContents } from "../../redux/channelcontent";
 import { setCurrentChannel, setCurrentServer } from "../../redux/session";
-import EmptyNavBar from "../ChannelNavBar/EmptyNavBar";
+// import EmptyNavBar from "../ChannelNavBar/EmptyNavBar";
 import CreateServerButton from "../CreateServerButton/CreateServerButton";
 
 
@@ -20,12 +20,12 @@ const MainPage = () => {
     const serverSlice = useSelector(state => state.servers)
     const channelSlice = useSelector(state => state.channels)
     const memberSlice = useSelector(state => state.members)
-    const postSlice = useSelector(state => state.contents)
+    // const postSlice = useSelector(state => state.contents)
 
-    let showPanels;
-    const loadAll = async () => {
+    // let showPanels;
+    // const loadAll = async () => {
 
-    }
+    // }
 
     console.log(typeof memberSlice)
     useEffect(() => {

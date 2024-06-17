@@ -1,6 +1,6 @@
 import OpenModalButtonCreateServer from "../OpenModalButton/OpenModalButtonCreateServer";
 import { useModal } from "../../context/Modal";
-import UpdatePostModal from "../UpdatePostModal/UpdatePostModal";
+// import UpdatePostModal from "../UpdatePostModal/UpdatePostModal";
 import CreateServerPage from "../CreateServerPage/CreateServerPage";
 
 

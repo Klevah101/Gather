@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllServers } from "../../redux/server";
 import DiscoveryServer from "./DiscoveryServer";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const FindServerPage = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const dispatch = useDispatch()
     const serverSlice = useSelector(state => state.servers)
 
-    const handleCreateServer = () => {
-        navigate("/new/server")
-    }
+    // const handleCreateServer = () => {
+    //     navigate("/new/server")
+    // }
 
     useEffect(async () => {
         await dispatch(thunkGetAllServers())
