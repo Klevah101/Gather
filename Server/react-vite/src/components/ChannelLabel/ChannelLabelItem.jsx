@@ -12,8 +12,8 @@ const ChannelLabelItem = ({ label, channel }) => {
     }
 
     return (
-        <p className="channel-label-text" onClick={() => handleClick(channel)}><HiMiniHashtag /> {label}</p>
-    
+        <div> <p className="channel-label-text hoverable" onClick={() => handleClick(channel)}><HiMiniHashtag /> {label}</p></div>
+
     )
 }
 export default ChannelLabelItem;

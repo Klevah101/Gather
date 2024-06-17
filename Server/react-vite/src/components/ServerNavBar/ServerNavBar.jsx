@@ -9,7 +9,7 @@ import { setCurrentChannel, setCurrentServer } from "../../redux/session";
 // import { useNavigate } from "react-router-dom";
 import CreateServerButton from "../CreateServerButton/CreateServerButton.jsx";
 // import { clearCurrentServer } from "../../redux/session";
-
+import { CiCircleMinus } from "react-icons/ci";
 
 
 
@@ -57,15 +57,17 @@ const ServerNavBar = () => {
     return (
         <div className="server-nav-container">
             <div className="nav-bar server-bar">
-                {serverSlice[currentServer] && <button onClick={handleClick}>test delete</button>}
+                {serverSlice[currentServer] && <button onClick={handleClick} className="delete-server-button"><CiCircleMinus /></button>}
                 {serverSlice &&
                     Object.keys(serverSlice).map(element => {
                         return <div key={element.id}> <ServerNavItem serverId={element} serverUrl={serverSlice[element].icon} />
 
                         </div>
                     })
-                }
-                <CreateServerButton />
+                }<div className="hoverable">
+
+                    <CreateServerButton />
+                </div>
             </div>
         </div>
     )

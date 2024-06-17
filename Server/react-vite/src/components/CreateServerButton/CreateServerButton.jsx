@@ -9,12 +9,14 @@ const CreateServerButton = () => {
     const closeMenu = () => {
         closeModal()
     }
-    return (
+    return (<div className="hoverable">
+
         <OpenModalButtonCreateServer
             buttonText="Create Server"
             onItemClick={closeMenu}
             modalComponent={<CreateServerPage />}
-        />)
+        /></div>)
+
 }
 
 export default CreateServerButton;

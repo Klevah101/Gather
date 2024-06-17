@@ -176,7 +176,7 @@ form>textarea {
     flex-direction: column;
 }
 
-.server-nav-item>svg {
+.server-nav-item>div>svg {
     font-size: 4rem;
     color: red;
     margin-block: 16px;
@@ -410,8 +410,8 @@ body {
 
 .landing-div>form>div>button {
     background-color: cornflowerblue;
-    width:60px;
-    height: 60px;
+    width: 60px;
+    height: 40px;
     /* justify-self: center; */
 }
 
@@ -422,7 +422,8 @@ body {
 label>input {
     display: flex;
     flex-direction: column;
-    height: 24px
+    height: 24px;
+    margin-bottom: 16px;
 }
 
 .landing-columns {
@@ -431,8 +432,44 @@ label>input {
     /* align-items: center; */
 }
 
-.buttons{
+.buttons {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.modalUser {
+    width: 100px;
+}
+
+.modalUserButton>p {
+    margin-inline: 16px;
+    margin-block: 8px;
+    margin-left: 0px;
+    color: black;
+}
+
+.modalUserButton>button {
+    margin-inline: 16px;
+    margin-block: 8px;
+    margin-left: 16px;
+    color: black;
+    width: 80%;
+    height: 24px;
+    background-color: cornflowerblue;
+}
+
+.user-section-item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.delete-server-button {
+    width: 64px;
+    height: 64px;
+    color: red;
+    background-color: #00000000;
+    border: none;
+    font-size: 3rem;
 }

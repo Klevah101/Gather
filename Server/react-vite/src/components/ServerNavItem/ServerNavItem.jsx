@@ -30,7 +30,7 @@ const ServerNavItem = ({ serverId, serverUrl }) => {
                         // }
                     })
             }}>
-                {showImage && <img className="server-image" src={serverUrl}></img> || <BsQuestionSquare />}
+                {showImage && <img className="server-image hoverable" src={serverUrl}></img> || <div className="hoverable"><BsQuestionSquare /></div>}
             </p>
         </div>
     )
