@@ -6,21 +6,29 @@
 // import LoginFormModal from "../LoginFormModal";
 // import SignupFormModal from "../SignupFormModal";
 // import { useNavigate } from "react-router-dom";
-
+import { thunkLogout } from "../../redux/session";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function UserProfileInfo() {
     const user = useSelector(state => state.session.user)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    const handleLogout = async () => {
+        await dispatch(thunkLogout());
+        navigate("/")
+    }
     return (
         <div className="modalUserButton">
             {/* <button onClick={toggleMenu}>
                 <FaUserCircle /> <p>hi</p>
             </button> */}
-            <p>{user.username}</p>
-            <p>{user.email}</p>
+            <p>{user && user.username}</p>
+            <p>{user && user.email}</p>
             {/* <button onClick={logout}>Log Out</button> */}
-            <button>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     )
 }
