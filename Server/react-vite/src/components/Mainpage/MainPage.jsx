@@ -35,8 +35,6 @@ const MainPage = () => {
                 if (data) {
                     id = data[Object.keys(data)[0]].id
                 }
-
-
                 await dispatch(setCurrentServer(id))
                 await dispatch(thunkGetMembers(id))
                 await dispatch(thunkGetChannels(id))
