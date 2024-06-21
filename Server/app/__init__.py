@@ -12,7 +12,7 @@ from .api.auth_routes import auth_routes
 from .api.server_routes import server_routes
 from .api.channel_routes import channel_routes
 from .api.post_routes import post_routes
-
+import eventlet
 from flask_socketio import SocketIO #########
 
 app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
