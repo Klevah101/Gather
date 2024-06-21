@@ -1,9 +1,9 @@
 import { channelSocket } from "../../socket";
 import { useState, useEffect } from 'react';
-import { ConnectionState } from './ConnectionState';
-import { ConnectionManager } from './ConnectionManager';
-import { Events } from "./Events";
-import { MyForm } from './MyForm';
+// import { ConnectionState } from './ConnectionState';
+// import { ConnectionManager } from './ConnectionManager';
+// import { Events } from "./Events";
+// import { MyForm } from './MyForm';
 import { thunkGetUserServers } from "../../redux/server";
 import { useDispatch } from "react-redux";
 const SocketTest = () => {
@@ -20,12 +20,12 @@ const SocketTest = () => {
             setIsConnected(false);
         }
         function onChConnect() {
-            setIsChConnected(true);
+            // setIsChConnected(true);
             console.log("connected")
         }
         
         function onChDisconnect() {
-            setIsChConnected(false);
+            // setIsChConnected(false);
             console.log("disconnected")
         }
 
@@ -39,18 +39,18 @@ const SocketTest = () => {
             console.table(value)
         }
 
-        socket.on('connect', onConnect);
-        socket.on('disconnect', onDisconnect);
-        socket.on('foo', onFooEvent);
+        // socket.on('connect', onConnect);
+        // socket.on('disconnect', onDisconnect);
+        // socket.on('foo', onFooEvent);
 
         channelSocket.on('connect',onChConnect)
         channelSocket.on('disconnect',onChDisconnect)
         channelSocket.on('oof',onOofEvent)
 
         return () => {
-            socket.off('connect', onConnect);
-            socket.off('disconnect', onDisconnect);
-            socket.off('foo', onFooEvent);
+            // socket.off('connect', onConnect);
+            // socket.off('disconnect', onDisconnect);
+            // socket.off('foo', onFooEvent);
            
             channelSocket.off('connect', onChConnect);
             channelSocket.off('disconnect', onChDisconnect);
@@ -60,10 +60,10 @@ const SocketTest = () => {
 
     return (
         <div className="App">
-            <ConnectionState isConnected={isConnected} />
-            <Events events={fooEvents} />
-            <ConnectionManager />
-            <MyForm />
+            {/* <ConnectionState isConnected={isConnected} /> */}
+            {/* <Events events={fooEvents} /> */}
+            {/* <ConnectionManager /> */}
+            {/* <MyForm /> */}
         </div>
     );
 }

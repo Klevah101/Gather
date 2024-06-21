@@ -2,12 +2,12 @@ import { channelSocket} from "../../socket";
 
 export function ConnectionManager(){
     function connect(){
-        socket.connect();
+        // socket.connect();
         channelSocket.connect();
     }
 
     function disconnect(){
-        socket.disconnect();
+        // socket.disconnect();
         channelSocket.disconnect();
     }
 
