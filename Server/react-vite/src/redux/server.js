@@ -78,13 +78,41 @@ export const thunkGetAllServers = () => async (dispatch) => {
   }
 }
 
-export const thunkGetServers = () => async (dispatch) => {
-  const response = await fetch("/api/servers");
+// export const thunkGetUserServers = () => async (dispatch) => {
+//   //change to users id servers
+//   const response = await fetch("/api/servers");
+//   if (response.ok) {
+//     const data = await response.json();
+//     // only needed for post/put
+//     if (data.errors) {
+//       return;
+//     }
+//     //
+
+
+//     const obj = {};
+//     const keys = Object.keys(data.servers)
+//     keys.forEach(element => {
+//       obj[data.servers[element].id] = data.servers[element]
+//     });
+//     dispatch(getUserServers(obj));
+//     return obj
+//   }
+// };
+
+
+export const thunkGetUserServers = (id) => async (dispatch) => {
+  //change to users id servers
+  const response = await fetch(`/api/users/${id}/servers/all`);
   if (response.ok) {
     const data = await response.json();
+    // only needed for post/put
     if (data.errors) {
       return;
     }
+    //
+
+    
     const obj = {};
     const keys = Object.keys(data.servers)
     keys.forEach(element => {

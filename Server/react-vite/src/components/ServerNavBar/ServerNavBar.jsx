@@ -1,7 +1,7 @@
 import { thunkDeleteServer } from "../../redux/server.js";
 import ServerNavItem from "../ServerNavItem/ServerNavItem.jsx";
 import { useDispatch, useSelector } from "react-redux"
-import { thunkGetServers } from "../../redux/server";
+import { thunkGetUserServers } from "../../redux/server";
 import { clearChannels, thunkGetChannels } from "../../redux/channel";
 import { clearMembers, thunkGetMembers } from "../../redux/member";
 import { clearContents, thunkGetChannelContents } from "../../redux/channelcontent";
@@ -16,10 +16,11 @@ import { CiCircleMinus } from "react-icons/ci";
 const ServerNavBar = () => {
     // const navigate = useNavigate()
     const dispatch = useDispatch()
+    const user = useSelector(state=>state.session.user)
     const serverSlice = useSelector(state => state.servers)
     const currentServer = useSelector(state => state.session.server)
 
-    const handleClick = async () => {
+    const handleDeleteServer = async () => {
         if (Object.keys(serverSlice).length <= 1) {
             dispatch(clearContents())
             dispatch(clearMembers())
@@ -29,7 +30,7 @@ const ServerNavBar = () => {
             // console.log("navigated")
         }
         await dispatch(thunkDeleteServer(currentServer))
-        dispatch(thunkGetServers())
+        dispatch(thunkGetUserServers(user.id))
             .then(async data => {
                 let id
                 // if (Object.keys(data).length != 0) {
@@ -57,15 +58,13 @@ const ServerNavBar = () => {
     return (
         <div className="server-nav-container">
             <div className="nav-bar server-bar">
-                {serverSlice[currentServer] && <button onClick={handleClick} className="delete-server-button"><CiCircleMinus /></button>}
+                {serverSlice[currentServer] && <button onClick={handleDeleteServer} className="delete-server-button"><CiCircleMinus /></button>}
                 {serverSlice &&
                     Object.keys(serverSlice).map(element => {
                         return <div key={element.id}> <ServerNavItem serverId={element} serverUrl={serverSlice[element].icon} />
-
                         </div>
-                    })
-                }<div className="hoverable">
-
+                    })}
+                <div className="hoverable">
                     <CreateServerButton />
                 </div>
             </div>

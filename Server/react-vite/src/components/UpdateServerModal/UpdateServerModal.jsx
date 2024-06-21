@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetServers, thunkUpdateServer } from "../../redux/server";
+import { thunkGetUserServers, thunkUpdateServer } from "../../redux/server";
 
 function UpdateServerModal() {
 
   const dispatch = useDispatch()
+  const user = useSelector(state=>state.session.user)
   const serverSlice = useSelector(state => state.servers)
   const currentServer = useSelector(state => state.session.server)
   const [name, setName] = useState(serverSlice[currentServer].name)
@@ -20,7 +21,7 @@ function UpdateServerModal() {
       icon: url
     }
     await dispatch(thunkUpdateServer(currentServer, payload))
-    dispatch(thunkGetServers())
+    dispatch(thunkGetUserServers(user.id))
   };
 
   return (

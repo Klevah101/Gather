@@ -13,6 +13,8 @@ from .api.server_routes import server_routes
 from .api.channel_routes import channel_routes
 from .api.post_routes import post_routes
 
+from flask_socketio import SocketIO #########
+
 app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
 
 # Setup login manager
@@ -37,8 +39,35 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 db.init_app(app)
 Migrate(app, db)
 
-# Application Security
 CORS(app)
+# CORS(app,resources={r"/*":{"origins":"http://127.0.0.1:8000"}})
+# Application Security
+##################
+socketio = SocketIO(app,cors_allowed_origins="http://127.0.0.1:8000")
+socketio.run(app)
+
+
+
+@socketio.on('message',namespace="/servers")
+def handle_message(data):
+    # print('received message: ' + data)
+    socketio.emit('update_server',data,namespace="/servers")
+
+@socketio.on('new_post',namespace="/posts")
+def handle_post(data):
+    # print('New post: ' + data)
+    socketio.emit('update_post',data,namespace="/posts")
+
+@socketio.on('new_channel',namespace="/channels")
+def handle_post(data):
+    # print('New Channel: ' + data)
+    socketio.emit('update_channel',data,namespace="/channels")
+
+@socketio.on('new_member',namespace="/members")
+def handle_post(data):
+    # print('New Member: ' + data)
+    socketio.emit('update_member',data,namespace="/members")
+##################
 
 
 # Since we are deploying with Docker and Flask,

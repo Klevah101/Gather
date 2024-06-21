@@ -15,21 +15,19 @@ const ServerNavItem = ({ serverId, serverUrl }) => {
         showImage = true
     }
 
+    const handleCascadeLoad = async () => {
+        dispatch(setCurrentServer(serverId))
+        dispatch(thunkGetMembers(serverId))
+        dispatch(thunkGetChannels(serverId))
+            .then(data => {
+                const id = data[Object.keys(data)[0]].id
+                dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
+                dispatch(thunkGetChannelContents(id))
+            })}
+
     return (
         <div >
-            <p className="server-nav-item" onClick={async () => {
-                console.log(serverId)
-                dispatch(setCurrentServer(serverId))
-                dispatch(thunkGetMembers(serverId))
-                dispatch(thunkGetChannels(serverId))
-                    .then(data => {
-                        const id = data[Object.keys(data)[0]].id
-                        // console.log("this is the id", id)
-                        dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
-                        dispatch(thunkGetChannelContents(id))
-                        // }
-                    })
-            }}>
+            <p className="server-nav-item" onClick={handleCascadeLoad}>
                 {showImage && <img className="server-image hoverable" src={serverUrl}></img> || <div className="hoverable"><BsQuestionSquare /></div>}
             </p>
         </div>

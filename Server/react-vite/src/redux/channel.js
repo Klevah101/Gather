@@ -46,10 +46,7 @@ export const thunkGetChannels = (serverId) => async (dispatch) => {
        await dispatch(clearChannels())
         return
     }
-    if(!serverId){ 
-        await dispatch(clearChannels())
-        return
-    }
+  
     const response = await fetch(`/api/servers/${serverId}/channels`);
 
     if (response.ok) {

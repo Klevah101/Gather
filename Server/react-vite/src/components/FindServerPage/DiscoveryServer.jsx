@@ -1,12 +1,13 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { thunkAddMember } from "../../redux/member"
 import { useNavigate } from "react-router-dom";
-import { thunkGetServers } from "../../redux/server";
+import { thunkGetUserServers } from "../../redux/server";
 const DiscoveryServer = ({ server }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
+    const user = useSelector(state => state.session.user)
     const handleJoin = async (serverId) => {
-        await dispatch(thunkGetServers())
+        await dispatch(thunkGetUserServers(user.id))
         await dispatch(thunkAddMember(serverId))
         navigate('/main')
     }
@@ -17,7 +18,6 @@ const DiscoveryServer = ({ server }) => {
             <p>{server.description}</p>
             <button onClick={() => handleJoin(server.id)}>Join</button>
         </div>
-
     )
 }
 export default DiscoveryServer

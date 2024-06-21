@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkCreateContent } from "../../redux/channelcontent";
+import { postSocket } from "../../socket";
+
 
 const ChannelPostBar = () => {
     const dispatch = useDispatch();
     const [post, setPost] = useState("");
     const currentChannel = useSelector(state => state.session.channel)
-    const sendPost = (e) => {
+    const sendPost = async (e) => {
         // dispatch()
 
         if (e.key === 'Enter') {
@@ -14,8 +16,12 @@ const ChannelPostBar = () => {
                 channel_id: currentChannel.id,
                 content: post
             }
-            dispatch(thunkCreateContent(obj))
+            await dispatch(thunkCreateContent(obj))
             setPost("")
+
+            const obj2 = { "message": "This is my test" }
+            postSocket.emit('new_post', obj2)
+            // socket.timeout(5000).emit('new_post')
         }
 
     }

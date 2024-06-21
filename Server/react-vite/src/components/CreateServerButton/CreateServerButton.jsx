@@ -16,7 +16,6 @@ const CreateServerButton = () => {
             onItemClick={closeMenu}
             modalComponent={<CreateServerPage />}
         /></div>)
-
 }
 
 export default CreateServerButton;

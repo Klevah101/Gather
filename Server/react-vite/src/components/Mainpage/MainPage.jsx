@@ -4,19 +4,21 @@ import ChannelContent from "../ChannelContent/ChannelContent";
 import ChannelNavBar from "../ChannelNavBar/ChannelNavBar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetServers } from "../../redux/server";
+import { thunkGetUserServers } from "../../redux/server";
 import { thunkGetChannels } from "../../redux/channel";
 import { thunkGetMembers } from "../../redux/member";
 import { thunkGetChannelContents } from "../../redux/channelcontent";
 import { setCurrentChannel, setCurrentServer } from "../../redux/session";
 // import EmptyNavBar from "../ChannelNavBar/EmptyNavBar";
 import CreateServerButton from "../CreateServerButton/CreateServerButton";
+import { channelSocket, postSocket, memberSocket, serverSocket } from "../../socket";
 
 
 
 const MainPage = () => {
     const dispatch = useDispatch();
 
+    const user = useSelector(state => state.session.user)
     const serverSlice = useSelector(state => state.servers)
     const channelSlice = useSelector(state => state.channels)
     const memberSlice = useSelector(state => state.members)
@@ -27,9 +29,9 @@ const MainPage = () => {
 
     // }
 
-    console.log(typeof memberSlice)
-    useEffect(() => {
-        dispatch(thunkGetServers())
+    const reload = () => {
+
+        dispatch(thunkGetUserServers(user.id))
             .then(async data => {
                 let id
                 if (data) {
@@ -47,8 +49,45 @@ const MainPage = () => {
                         dispatch(thunkGetChannelContents(id))
                         return id
                     })
-
             })
+    }
+
+    const handleUpdatePost = (data) => {
+        console.log("triggered")
+        console.table(data)
+        reload();
+    }
+
+    const handleUpdateMember = (data) => {
+        console.table(data)
+        reload();
+    }
+
+    const handleUpdateChannel = (data) => {
+        console.table(data)
+        reload()
+    }
+
+    const handleUpdateServer = (data) => {
+        console.table(data)
+        reload();
+    }
+
+    console.table(serverSlice)
+    useEffect(() => {
+        reload();
+
+        serverSocket.on('update_server', handleUpdateServer)
+        channelSocket.on('update_channel', handleUpdateChannel)
+        postSocket.on('update_post', handleUpdatePost)
+        memberSocket.on('update_member', handleUpdateMember)
+
+        return () => {
+            serverSocket.off('update_server', handleUpdateServer)
+            channelSocket.off('update_channel', handleUpdateChannel)
+            postSocket.ff('update_post', handleUpdatePost)
+            memberSocket.off('update_member', handleUpdateMember)
+        }
     }, [dispatch])
 
 
@@ -59,7 +98,7 @@ const MainPage = () => {
             {!!Object.keys(channelSlice).length && <ChannelNavBar /> || <div className="create-server-notification">
                 <h2 >Create a Server</h2>
                 <img src="/pick_server.PNG" alt=""></img>
-                <p>create a server by clicking the <CreateServerButton/></p>
+                <p>create a server by clicking the <CreateServerButton /></p>
             </div>}
             {!!Object.keys(channelSlice).length && <ChannelContent />}
             {/* {postSlice && <ChannelContent />} */}

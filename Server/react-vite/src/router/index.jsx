@@ -4,6 +4,7 @@ import MainPage from '../components/Mainpage/MainPage.jsx';
 import LandingPage from '../components/LandingPage/LandingPage.jsx';
 import CreateServerPage from '../components/CreateServerPage/CreateServerPage.jsx';
 import FindServerPage from '../components/FindServerPage/FindServerPage.jsx';
+import SocketTest from '../components/SocketTest/SocketTest.jsx';
 
 
 export const router = createBrowserRouter([
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "discover",
         element: <FindServerPage />
+      }, {
+
+        path: "socket",
+        element: <SocketTest />
       }
     ],
   },

@@ -14,6 +14,8 @@ import CurrentUserSection from "../CurrentUserSection/CurrentUserSection";
 // import { thunkDeleteServer } from "../../redux/server";
 import { MdOutlineFiberNew } from "react-icons/md";
 
+import { channelSocket } from "../../socket";
+
 const ChannelNavBar = () => {
     const dispatch = useDispatch()
     // const navigate = useNavigate()
@@ -24,6 +26,7 @@ const ChannelNavBar = () => {
     // const user = useSelector(state => state.session.user)
     const [hide, setHide] = useState("hide")
     const [newChannelText, setNewChannelText] = useState("")
+
     const handleNewChannelSubmit = async (e) => {
         if (e.key == 'Enter') {
             const payload = {
@@ -34,6 +37,7 @@ const ChannelNavBar = () => {
             dispatch(thunkGetChannels(currentServer))
             setHide("hide")
             setNewChannelText("")
+            channelSocket.emit('new_channel',{})          
         }
     }
 

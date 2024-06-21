@@ -28,3 +28,25 @@ class Server(db.Model):
             'description':self.description,
             'icon':self.icon
         }
+    
+    def to_dict_channels(self):
+        obj = {}
+        for channel in self.channels:
+            obj[channel.id] = channel.to_dict()
+        return obj
+        
+    def to_dict_members(self):
+        obj = {}
+        for member in self.members:
+            obj[member.id] = member.to_dict()
+        return obj
+    
+    def to_dict_channel_posts(self):
+        obj = {}
+        for channel in self.channels:
+            for post in channel.channelposts:
+                obj[post.id] = post.to_dict()
+        return obj
+
+
+        
