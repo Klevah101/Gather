@@ -71,6 +71,7 @@ export const thunkCreateContent = (payload) => async (dispatch) => {
     if (response.ok) {
         const post = await response.json()
         dispatch(createContent(post))
+        return post;
     }
 }
 

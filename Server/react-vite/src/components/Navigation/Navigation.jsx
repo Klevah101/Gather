@@ -6,7 +6,7 @@ import "./Navigation.css";
 function Navigation() {
 
   return (
-    <div >
+    <div className="hidden-navigation">
     <ul className="navigation-menu">
       <li>
         <NavLink to="/">Home</NavLink>

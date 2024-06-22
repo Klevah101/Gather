@@ -15,9 +15,12 @@ import { channelSocket, postSocket, memberSocket, serverSocket } from "../../soc
 
 
 
-const MainPage = () => {
+const MainPage = ({reload}) => {
     const dispatch = useDispatch();
 
+    const state = useSelector(state => state)
+    const currentServer = useSelector(state => state.session.server)
+    const currentChannel = useSelector(state => state.session.channel)
     const user = useSelector(state => state.session.user)
     const serverSlice = useSelector(state => state.servers)
     const channelSlice = useSelector(state => state.channels)
@@ -29,51 +32,30 @@ const MainPage = () => {
 
     // }
 
-    const reload = () => {
+   
 
-        dispatch(thunkGetUserServers(user.id))
-            .then(async data => {
-                let id
-                if (data) {
-                    id = data[Object.keys(data)[0]].id
-                }
-                await dispatch(setCurrentServer(id))
-                await dispatch(thunkGetMembers(id))
-                await dispatch(thunkGetChannels(id))
-                    .then(data => {
-                        let id
-                        if (data) {
-                            id = data[Object.keys(data)[0]].id
-                        }
-                        dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
-                        dispatch(thunkGetChannelContents(id))
-                        return id
-                    })
-            })
-    }
+  
 
     const handleUpdatePost = (data) => {
-        console.log("triggered")
-        console.table(data)
         reload();
     }
 
     const handleUpdateMember = (data) => {
-        console.table(data)
+        // console.table(data)
         reload();
     }
 
     const handleUpdateChannel = (data) => {
-        console.table(data)
+        // console.table(data)
         reload()
     }
 
     const handleUpdateServer = (data) => {
-        console.table(data)
+        // console.table(data)
         reload();
     }
 
-    console.table(serverSlice)
+    // console.table(serverSlice)
     useEffect(() => {
         reload();
 
@@ -85,10 +67,10 @@ const MainPage = () => {
         return () => {
             serverSocket.off('update_server', handleUpdateServer)
             channelSocket.off('update_channel', handleUpdateChannel)
-            postSocket.ff('update_post', handleUpdatePost)
+            postSocket.off('update_post', handleUpdatePost)
             memberSocket.off('update_member', handleUpdateMember)
         }
-    }, [dispatch])
+    }, [])
 
 
 

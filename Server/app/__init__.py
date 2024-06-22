@@ -38,9 +38,10 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 db.init_app(app)
 Migrate(app, db)
 
+# CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 CORS(app)
 # socketio = SocketIO(app,cors_allowed_origins="https://gatherlive.onrender.com:8000")
-socketio = SocketIO(app,cors_allowed_origins="http://127.0.0.1:8000"if os.environ.get('FLASK_ENV') != 'production' else "https://gatherlive.onrender.com")
+socketio = SocketIO(app,cors_allowed_origins="*"if os.environ.get('FLASK_ENV') != 'production' else "https://gatherlive.onrender.com")
 socketio.run(app) # comment out for production
 # socketio.run(app,allow_unsafe_werkzeug=True)
 
@@ -53,7 +54,7 @@ def handle_message(data):
 
 @socketio.on('new_post',namespace="/posts")
 def handle_post(data):
-    # print('New post: ' + data)
+    print('New post:------------------------------------------- ')
     socketio.emit('update_post',data,namespace="/posts")
 
 @socketio.on('new_channel',namespace="/channels")

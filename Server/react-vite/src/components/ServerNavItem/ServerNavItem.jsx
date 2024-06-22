@@ -16,11 +16,15 @@ const ServerNavItem = ({ serverId, serverUrl }) => {
     }
 
     const handleCascadeLoad = async () => {
+        if(sessionStorage.getItem("currentServer") == serverId) return
+        sessionStorage.setItem("currentServer",serverId)
+        sessionStorage.removeItem("currentChannel")
         dispatch(setCurrentServer(serverId))
         dispatch(thunkGetMembers(serverId))
-        dispatch(thunkGetChannels(serverId))
-            .then(data => {
+        dispatch( thunkGetChannels(serverId))
+            .then(async data => {
                 const id = data[Object.keys(data)[0]].id
+                sessionStorage.setItem("currentChannel",id)
                 dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
                 dispatch(thunkGetChannelContents(id))
             })}

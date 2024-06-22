@@ -1,3 +1,5 @@
+import { setChannels } from "./channel";
+
 const SET_USER_SERVERS = 'session/getUserServers';
 const CREATE_SERVER = 'session/createServer';
 const GET_ALL_SERVERS = 'session/getAllServers';
@@ -8,6 +10,7 @@ const CLEAR_SERVERS = 'session/clearServers'
 export const clearServers = () => ({
   type: CLEAR_SERVERS
 })
+
 const deleteServer = (server) => ({
   type: DELETE_SERVER,
   payload: server
@@ -112,13 +115,26 @@ export const thunkGetUserServers = (id) => async (dispatch) => {
     }
     //
 
+
+    const servers = {};
     
-    const obj = {};
-    const keys = Object.keys(data.servers)
+    let keys = Object.keys(data.servers)
     keys.forEach(element => {
-      obj[data.servers[element].id] = data.servers[element]
+      servers[data.servers[element].id] = data.servers[element]
     });
-    dispatch(getUserServers(obj));
+
+    const channels = {};
+    
+    keys= Object.keys(servers)
+  
+
+    
+    dispatch(getUserServers(servers));
+    
+    
+    
+
+    // dispatch(setChannels())
     return obj
   }
 };

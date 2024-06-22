@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './Layout';
-import MainPage from '../components/Mainpage/MainPage.jsx';
+import MainPageContainer from '../components/Mainpage/MainPageContainer.jsx';
 import LandingPage from '../components/LandingPage/LandingPage.jsx';
 import CreateServerPage from '../components/CreateServerPage/CreateServerPage.jsx';
 import FindServerPage from '../components/FindServerPage/FindServerPage.jsx';
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
       // },
       {
         path: "main",
-        element: <MainPage />
+        element: <MainPageContainer />
       },
       {
         path: "new/server",

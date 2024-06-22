@@ -7,7 +7,7 @@ export const clearChannels = () => ({
     type: CLEAR_CHANNELS
 })
 
-const setChannels = (channels) => ({
+export const setChannels = (channels) => ({
     type: SET_CHANNELS,
     payload: channels
 });

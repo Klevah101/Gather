@@ -14,7 +14,7 @@ const UpdatePostModal = ({ id }) => {
             content
         }
         dispatch(thunkUpdateContent(id, obj))
-        console.log("line 10 UpdatePostModal button click empty")
+        // console.log("line 10 UpdatePostModal button click empty")
     }
     return (
         <>
