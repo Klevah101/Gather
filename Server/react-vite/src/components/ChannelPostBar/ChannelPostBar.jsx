@@ -15,14 +15,15 @@ const ChannelPostBar = ({scrollToBottom}) => {
 
         if (e.key === 'Enter') {
             const obj = {
-                channel_id: currentChannel.id,
+                channel_id: sessionStorage.getItem("currentChannel"),
+                // channel_id: currentChannel.id,
                 content: post
             }
             await dispatch(thunkCreateContent(obj))
             setPost("")
 
             const obj2 = currentChannel
-            sessionStorage.setItem("currentChannel",currentChannel.id)
+            sessionStorage.setItem("currentChannel",sessionStorage.getItem("currentChannel"))
             postSocket.emit('new_post', obj2)
             // socket.timeout(5000).emit('new_post')
             scrollToBottom();

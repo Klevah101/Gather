@@ -29,12 +29,14 @@ const MainPageContainer = () => {
 
         await dispatch(thunkGetUserServers(user.id))
             .then(async data => {
-                let id
-                if (prevServer) id = prevServer
-                else if (data) {
-                    id = data[Object.keys(data)[0]].id
-                }
+            
 
+                console.table(data)
+                let id = data[Object.keys(data)[0]].id
+                
+                if (prevServer) id = prevServer
+
+                console.log("this is the id",id)
 
                 await dispatch(setCurrentServer(id))
                 await dispatch(thunkGetMembers(id))
@@ -45,15 +47,37 @@ const MainPageContainer = () => {
                             id = data[Object.keys(data)[0]].id
                         }
 
-                  
-                            dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
+
+                        dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
                         console.log("Lets see what we have here", data[Object.keys(data)[0]])
                         await dispatch(thunkGetChannelContents(prevChannel))
                         return id
                     })
-                // console.table("prev channel:", Object.keys(prevChannel))
             })
     }
-    return <MainPage reload={reload} />
+
+
+    const reloadChannels = async () => {
+
+
+        // const id = sessionStorage.getItem("currentServer")
+
+        // await dispatch(setCurrentServer(id))
+        // await dispatch(thunkGetMembers(id))
+        // await dispatch(thunkGetChannels(id))
+        //     .then(async data => {
+        //         let id
+        //         if (data) {
+        //             id = data[Object.keys(data)[0]].id
+        //         }
+
+
+                // dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
+                // console.log("Lets see what we have here", data[Object.keys(data)[0]])
+                await dispatch(thunkGetChannelContents(sessionStorage.getItem("currentChannel")))
+                // return id
+            // })
+    }
+    return <MainPage reload={reload} reloadChannels={reloadChannels} />
 }
 export default MainPageContainer;
