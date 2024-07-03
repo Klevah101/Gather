@@ -13,12 +13,14 @@ import { CiCircleMinus } from "react-icons/ci";
 
 
 
-const ServerNavBar = () => {
+
+const ServerNavBar = ({ reload }) => {
     // const navigate = useNavigate()
     const dispatch = useDispatch()
-    const user = useSelector(state=>state.session.user)
+    const user = useSelector(state => state.session.user)
     const serverSlice = useSelector(state => state.servers)
-    const currentServer = useSelector(state => state.session.server)
+    const currentServer = sessionStorage.getItem("currentServer")
+    // const currentServer = useSelector(state => state.session.server)
 
     const handleDeleteServer = async () => {
         if (Object.keys(serverSlice).length <= 1) {
@@ -26,35 +28,18 @@ const ServerNavBar = () => {
             dispatch(clearMembers())
             dispatch(clearChannels())
             await dispatch(thunkDeleteServer(currentServer))
+
             // navigate('/')
             // console.log("navigated")
         }
         await dispatch(thunkDeleteServer(currentServer))
-        dispatch(thunkGetUserServers(user.id))
-            .then(async data => {
-                let id
-                // if (Object.keys(data).length != 0) {
-                // console.log(data)
-                id = data[Object.keys(data)[0]].id
-                // }
 
-
-                await dispatch(setCurrentServer(id))
-                dispatch(thunkGetMembers(id))
-                dispatch(thunkGetChannels(id))
-                    .then(data => {
-                        let id
-                        if (Object.keys(data).length != 0) {
-                            id = data[Object.keys(data)[0]].id
-                        }
-                        dispatch(setCurrentChannel(data[Object.keys(data)[0]]))
-                        dispatch(thunkGetChannelContents(id))
-                        return id
-                    })
-
-
-            })
+        sessionStorage.removeItem("currentServer")
+        sessionStorage.removeItem("currentChannel")
+        reload();
     }
+    console.table(serverSlice)
+
     return (
         <div className="server-nav-container">
             <div className="nav-bar server-bar">

@@ -9,17 +9,17 @@ import { channelSocket, postSocket, memberSocket, serverSocket } from "../../soc
 
 
 
-const MainPage = ({reload}) => {
+const MainPage = ({ reload }) => {
     const serverSlice = useSelector(state => state.servers)
     const channelSlice = useSelector(state => state.channels)
     const memberSlice = useSelector(state => state.members)
-    
+
     const handleUpdatePost = (data) => {
         reload();
     }
 
     const handleUpdateMember = (data) => {
-         reload();
+        reload();
     }
 
     const handleUpdateChannel = (data) => {
@@ -27,7 +27,7 @@ const MainPage = ({reload}) => {
     }
 
     const handleUpdateServer = (data) => {
-         reload();
+        reload();
     }
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const MainPage = ({reload}) => {
 
     return (
         < div className="page-layout">
-            {serverSlice && <ServerNavBar />}
+            {serverSlice && <ServerNavBar reload={reload} />}
             {!!Object.keys(channelSlice).length && <ChannelNavBar /> || <div className="create-server-notification">
                 <h2 >Create a Server</h2>
                 <img src="/pick_server.PNG" alt=""></img>

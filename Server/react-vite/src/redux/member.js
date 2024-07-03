@@ -29,13 +29,13 @@ export const thunkAddMember = (serverId) => async (dispatch) => {
         if (data.errors) {
             return;
         }
-        const obj = {};
-        const keys = Object.keys(data.members)
-        keys.forEach(element => {
-            obj[data.members[element].id] = data.members[element]
-        });
-        dispatch(addMember(obj));
-        return obj
+        // let obj = {};
+        // const keys = Object.keys(data.members)
+        // keys.forEach(element => {
+        //     obj[data.members[element].id] = data.members[element]
+        // });
+        // dispatch(addMember(obj));
+        // return obj
     }
 }
 

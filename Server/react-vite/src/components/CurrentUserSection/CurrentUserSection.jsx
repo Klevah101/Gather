@@ -10,7 +10,7 @@ const CurrentUserSection = () => {
     return (
         <div className="user-section-item">
             <img src="" alt=""></img>
-            <p>{user.username}</p>
+           { user && <p>{user.username}</p>}
             {/* <button className="setting-button"> */}
                 {/* <FaGear /> */}
                 <OpenModalUserInfo buttonText="" modalComponent={<UserProfileInfo />} />

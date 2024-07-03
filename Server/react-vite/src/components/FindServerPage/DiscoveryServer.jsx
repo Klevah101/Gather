@@ -1,13 +1,19 @@
 import { useDispatch, useSelector } from "react-redux"
-import { thunkAddMember } from "../../redux/member"
+import { clearMembers, thunkAddMember } from "../../redux/member"
 import { useNavigate } from "react-router-dom";
-import { thunkGetUserServers } from "../../redux/server";
+import { clearServers, thunkGetUserServers } from "../../redux/server";
+import { clearChannels } from "../../redux/channel";
 const DiscoveryServer = ({ server }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
     const handleJoin = async (serverId) => {
-        await dispatch(thunkGetUserServers(user.id))
+        // await dispatch(thunkGetUserServers(user.id))
+        sessionStorage.removeItem("currentServer")
+        sessionStorage.removeItem("currentChannel")
+        dispatch(clearMembers())
+        dispatch(clearChannels())
+        dispatch(clearServers())
         await dispatch(thunkAddMember(serverId))
         navigate('/main')
     }

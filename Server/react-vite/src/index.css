@@ -200,14 +200,14 @@ form>textarea {
 }
 
 .post-bar>input {
-    width: 50%;
+    width: calc(65vw - 72px);
 }
 
 .post-bar {
     display: flex;
     margin-left: 24px;
     /* justify-content: center; */
-    width: 100%;
+    /* width: 100vw; */
     position: absolute;
     bottom: 8px;
 }
@@ -262,6 +262,7 @@ form>textarea {
 }
 
 .server-discovery {
+    width: 100vw;
     background-color: cornflowerblue;
     height: 100vh;
     display: flex;

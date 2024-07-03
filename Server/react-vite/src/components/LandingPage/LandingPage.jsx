@@ -70,7 +70,7 @@ const LandingPage = () => {
 
     const loginDemo = async () => {
         dispatch(
-            thunkLogin({
+            await thunkLogin({
                 email: "demo@aa.io",
                 password: "password",
             })

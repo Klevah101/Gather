@@ -10,16 +10,27 @@ import { thunkLogout } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { clearContents } from "../../redux/channelcontent";
 
 function UserProfileInfo() {
     const user = useSelector(state => state.session.user)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+
+
+
+
     const handleLogout = async () => {
         await dispatch(thunkLogout());
+        sessionStorage.removeItem("currentServer")
+        sessionStorage.removeItem("currentChannel")
+        dispatch(clearContents())
+
+        // closeMenu();
         navigate("/")
     }
+
     return (
         <div className="modalUserButton">
             {/* <button onClick={toggleMenu}>
