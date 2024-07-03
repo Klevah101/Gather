@@ -42,7 +42,7 @@ Migrate(app, db)
 CORS(app)
 # socketio = SocketIO(app,cors_allowed_origins="https://gatherlive.onrender.com:8000",allow_unsafe_werkzeug=True)
 socketio = SocketIO(app,cors_allowed_origins="*"if os.environ.get('FLASK_ENV') != 'production' else "https://gatherlive.onrender.com")
-socketio.run(app) # comment out for production
+# socketio.run(app) # comment out for production
 # socketio.run(app,allow_unsafe_werkzeug=True)
 
 
