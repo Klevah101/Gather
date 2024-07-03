@@ -17,7 +17,6 @@ const CreateServerPage = () => {
             name, description, icon
         }
         await dispatch(thunkCreateServer(obj))
-        // should navigate you to the newly created server
         navigate('/');
     }
     return (
