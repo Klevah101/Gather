@@ -54,6 +54,12 @@ form>h2 {
     color: black;
 }
 
+form>p {
+    margin-block: 16px;
+    padding-inline: 0px;
+    font-size: 1.15rem;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -212,6 +218,11 @@ form>textarea {
     bottom: 8px;
 }
 
+.post-image {
+    max-width: 200px;
+    margin-left: 24px;
+}
+
 .hide {
     display: none;
 }
@@ -271,6 +282,9 @@ form>textarea {
     align-items: center;
 }
 
+.btn-icon-cntn {
+    position: relative;
+}
 
 .button-icon {
     position: absolute;
@@ -400,6 +414,9 @@ body {
     margin-left: 25vw;
     margin-top: 20vh;
     width: 50vw;
+    border-style: solid;
+    border-radius: 8px;
+    padding:24px;
 }
 
 .landing-div {

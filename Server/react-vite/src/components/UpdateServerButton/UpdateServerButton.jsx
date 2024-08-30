@@ -3,7 +3,7 @@ import { useModal } from "../../context/Modal";
 import UpdateServerModal from "../UpdateServerModal/UpdateServerModal";
 
 
-const UpdateServerButton = ()=>{
+const UpdateServerButton = ({reload})=>{
     const closeModal = useModal();
     const closeMenu = ()=>{
         closeModal()
@@ -13,7 +13,7 @@ const UpdateServerButton = ()=>{
         buttonStyle="update-server-btn"
         buttonText="Update Server"
         onItemClick={closeMenu}
-        modalComponent={  <UpdateServerModal />}
+        modalComponent={  <UpdateServerModal reload={reload}/>}
       />)
 }
 

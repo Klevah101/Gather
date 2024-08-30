@@ -51,7 +51,7 @@ const MainPage = ({ reload }) => {
     return (
         < div className="page-layout">
             {serverSlice && <ServerNavBar reload={reload} />}
-            {!!Object.keys(channelSlice).length && <ChannelNavBar /> || <div className="create-server-notification">
+            {!!Object.keys(channelSlice).length && <ChannelNavBar reload={reload} /> || <div className="create-server-notification">
                 <h2 >Create a Server</h2>
                 <img src="/pick_server.PNG" alt=""></img>
                 <p>create a server by clicking the <CreateServerButton /></p>

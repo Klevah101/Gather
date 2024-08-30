@@ -80,7 +80,7 @@ const LandingPage = () => {
 
     return (
         <div className="landing-page-container">
-            <h1>Welcome to gather</h1>
+            <h1>Welcome to Gather</h1>
             <div className="landing-columns">
 
                 <div className="landing-div">
@@ -89,6 +89,7 @@ const LandingPage = () => {
                     {errors.length > 0 &&
                         errors.map((message) => <p key={message}>{message}</p>)}
                     <form onSubmit={handleSubmit}>
+                        <p> Log in to see what's happening with your friends and community!</p>
                         <label>
                             Email
                             <input

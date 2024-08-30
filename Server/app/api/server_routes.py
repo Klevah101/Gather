@@ -122,6 +122,8 @@ def create_server():
 @server_routes.route('<int:id>',methods=['DELETE'])
 def delete_server(id):
     server = Server.query.get(id)
-    db.session.delete(server)
-    db.session.commit()
-    return {"message":"success"}
+    if(current_user.id == server.admin):
+        db.session.delete(server)
+        db.session.commit()
+        return {"message":"success"}
+    return {"message":"permission error"}

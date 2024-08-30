@@ -14,6 +14,31 @@ const ChannelContentItem = ({ content }) => {
         dispatch(thunkDeleteContent(content.id))
     }
 
+
+    const showImg = (string) => {
+        const regex = /(https?:\/\/[^\s]+)/g
+
+        if (regex.test(string)) {
+            const urls = string.match(regex)
+            if (urls[0].endsWith('.jpg') || urls[0].endsWith('.gif') || urls[0].endsWith('.png') || urls[0].endsWith('.jpeg')) return urls[0]
+        }
+        return null
+    }
+
+    const trimImgUrl = (string) => {
+        const regex = /(https?:\/\/[^\s]+)/g
+
+        if (regex.test(string)) {
+            const urls = string.match(regex)
+            if (urls[0].endsWith('.jpg') || urls[0].endsWith('.gif') || urls[0].endsWith('.png') || urls[0].endsWith('.jpeg')) {
+                let newString = string.replace(urls[0], '')
+                if (newString.length == 0) return "Image"
+                return newString
+            }
+        }
+        return string
+    }
+
     const showButton = (() => {
         if (memberSlice[content.user_id]) return user.id == memberSlice[content.user_id].id
     })()
@@ -23,16 +48,17 @@ const ChannelContentItem = ({ content }) => {
         <div>
             {memberSlice[content.user_id] && <p className="author" >{memberSlice[content.user_id].username}</p>}
             <div className="content-text" onMouseEnter={() => setShowButtons(true)} onMouseLeave={() => setShowButtons(false)}>
-                <p >{content.content}</p>
-                <div>    {showButtons &&
+                <p >{trimImgUrl(content.content)}</p>
+
+                <div className="btn-icon-cntn">    {showButtons &&
                     <div className="button-icon">
                         {showButton && <button className="button-icon" onClick={handleClickDeletePost}><RiDeleteBin2Fill /></button>}
                         {showButton && <UpdatePostButton contentId={content.id} />}
                     </div>
                 }
                 </div>
-
             </div>
+            <img className="post-image" src={showImg(content.content)} alt=""></img>
         </div>
     )
 }

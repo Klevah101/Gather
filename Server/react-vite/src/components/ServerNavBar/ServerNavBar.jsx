@@ -24,9 +24,9 @@ const ServerNavBar = ({ reload }) => {
 
     const handleDeleteServer = async () => {
         if (Object.keys(serverSlice).length <= 1) {
-            dispatch(clearContents())
-            dispatch(clearMembers())
-            dispatch(clearChannels())
+            // dispatch(clearContents())
+            // dispatch(clearMembers())
+            // dispatch(clearChannels())
             await dispatch(thunkDeleteServer(currentServer))
 
             // navigate('/')
@@ -43,7 +43,7 @@ const ServerNavBar = ({ reload }) => {
     return (
         <div className="server-nav-container">
             <div className="nav-bar server-bar">
-                {serverSlice[currentServer] && <button onClick={handleDeleteServer} className="delete-server-button"><CiCircleMinus /></button>}
+                {/* {serverSlice[currentServer] && <button onClick={handleDeleteServer} className="delete-server-button"><CiCircleMinus /></button>} */}
                 {serverSlice &&
                     Object.keys(serverSlice).map(element => {
                         return <div key={element.id}> <ServerNavItem serverId={element} serverUrl={serverSlice[element].icon} />

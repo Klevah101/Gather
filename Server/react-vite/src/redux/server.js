@@ -37,7 +37,7 @@ const updateServer = (server) => ({
 })
 
 export const thunkDeleteServer = (id) => async (dispatch) => {
-  const response = await fetch(`/api/servers/${id}`, {
+  const response =  await fetch(`/api/servers/${id}`, {
     method: "DELETE"
   })
 
@@ -141,7 +141,7 @@ function serverReducer(state = initialState, action) {
       delete obj[action.payload]
       return obj
     case CLEAR_SERVERS:
-      return null
+      return {}
     default:
       return state;
   }

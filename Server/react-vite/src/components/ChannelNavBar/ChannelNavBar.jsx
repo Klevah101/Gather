@@ -1,7 +1,7 @@
-import {  useState } from "react";
+import { useState } from "react";
 import ChannelLabelItem from "../ChannelLabel/ChannelLabelItem";
 import { useDispatch, useSelector } from "react-redux";
-import {thunkCreateChannel, thunkGetChannels } from "../../redux/channel";
+import { thunkCreateChannel, thunkGetChannels } from "../../redux/channel";
 import UpdateServerButton from "../UpdateServerButton/UpdateServerButton";
 // import ChannelPostBar from "../ChannelPostBar/ChannelPostBar";
 // import { thunkGetChannels } from "../../redux/channel";
@@ -16,10 +16,11 @@ import { MdOutlineFiberNew } from "react-icons/md";
 
 import { channelSocket } from "../../socket";
 
-const ChannelNavBar = () => {
+const ChannelNavBar = ({ reload }) => {
     const dispatch = useDispatch()
     // const navigate = useNavigate()
 
+    const user = useSelector(state => state.session.user)
     const serverSlice = useSelector(state => state.servers)
     const channelSlice = useSelector(state => state.channels)
     const currentServer = useSelector(state => state.session.server)
@@ -37,10 +38,18 @@ const ChannelNavBar = () => {
             dispatch(thunkGetChannels(currentServer))
             setHide("hide")
             setNewChannelText("")
-            channelSocket.emit('new_channel',{})          
+            channelSocket.emit('new_channel', {})
         }
     }
 
+    let owner = false;
+    if (serverSlice[currentServer]) {
+        if (serverSlice[currentServer].admin == user.id) {
+            owner = true;
+        }
+    }
+
+   
 
 
     // const handleClick = async () => {
@@ -89,15 +98,22 @@ const ChannelNavBar = () => {
 
         <div className="channel-nav-container">
             {/* <h2>Channel Nav Bar</h2> */}
-            {serverSlice[currentServer] && <div className="channel-header">
-            {/* <p>Server</p> */}
-                <h2 className="server-title"> {serverSlice[currentServer].name}<UpdateServerButton /></h2>
-                {/* <button onClick={handleClick}>test delete</button> */}               
+            <div className="channel-header">
+                {/* <p>Server</p> */}
+              
+                    <h2 className="server-title"> {serverSlice[currentServer].name}{
+                        owner && <UpdateServerButton reload={reload} />}
+
+                    </h2> 
+                
+                {/* <button onClick={handleClick}>test delete</button> */}
             </div>
-            }
+
             {/* {showButton && <> */}
-        
-            <button className="new-channel-btn"onClick={() => { setHide("") }}><MdOutlineFiberNew /></button>
+
+            {owner &&
+                <button className="new-channel-btn" onClick={() => { setHide("") }}><MdOutlineFiberNew /></button>
+            }
             {/* </>} */}
             <div className="nav-bar channel-bar">
                 <div className="item-list">
@@ -109,6 +125,7 @@ const ChannelNavBar = () => {
             </div>
             <input className={`{channel-input ${hide}`} value={newChannelText} type="text" placeholder="Enter Channel Name..." onKeyUp={(e) => handleNewChannelSubmit(e)} onChange={(e) => setNewChannelText(e.target.value)}></input>
         </div>
+
         <div className="user-section">
             <CurrentUserSection />
         </div>
